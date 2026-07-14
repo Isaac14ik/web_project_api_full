@@ -4,6 +4,7 @@ const { login, createUser } = require('./controllers/users');
 const auth = require('./middleware/auth');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
+const errorHandler = require('./middleware/error-handler');
 
 const app = express();
 const { PORT = 3000 } = process.env;
@@ -21,6 +22,9 @@ app.use(auth);
 
 app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
+
+// El manejador centralizado de errores siempre debe ir al final de todo
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
