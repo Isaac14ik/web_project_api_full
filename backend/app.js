@@ -7,6 +7,7 @@ const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
 const errorHandler = require('./middleware/error-handler');
 const { validateUserSignup, validateUserSignin } = require('./middleware/validation');
+const { requestLogger, errorLogger } = require('./middleware/logger');
 
 const app = express();
 const { PORT = 3000 } = process.env;
@@ -17,6 +18,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb')
   .then(() => console.log('Conectado con éxito a MongoDB'))
   .catch((err) => console.log('Error al conectar a MongoDB:', err));
 
+app.use(requestLogger);
+
 app.post('/signin', validateUserSignin, login);
 app.post('/signup', validateUserSignup, createUser);
 
@@ -24,6 +27,8 @@ app.use(auth);
 
 app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
+
+app.use(errorLogger);
 
 app.use(errors());
 app.use(errorHandler);
