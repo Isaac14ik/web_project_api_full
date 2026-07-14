@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const userRoutes = require('./routes/users');
+const cardRoutes = require('./routes/cards');
 
 const app = express();
 const { PORT = 3000 } = process.env;
@@ -19,6 +20,7 @@ app.post('/signup', createUser);
 app.use(auth);
 
 app.use('/users', userRoutes);
+app.use('/cards', cardRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
