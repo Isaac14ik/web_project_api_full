@@ -42,7 +42,8 @@ const login = (req, res) => {
     return res.status(400).send({ message: 'El correo y la contraseña son obligatorios' });
   }
 
-  User.findOne({ email })
+  
+  User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
         return res.status(401).send({ message: 'Correo electrónico o contraseña incorrectos' });
