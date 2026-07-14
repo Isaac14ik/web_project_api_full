@@ -36,10 +36,10 @@ function App() {
     const token = localStorage.getItem('jwt');
     if (token) {
       auth.getContent(token)
-        .then((res) => {
-          if (res && res.data) {
+        .then((user) => {
+          if (user && user.email) {
             api.setToken(token);
-            setEmail(res.data.email);
+            setEmail(user.email);
             setIsLoggedIn(true);
             history.push('/');
           }
@@ -56,7 +56,7 @@ function App() {
       Promise.all([api.getUserInfo(), api.getCardList()])
         .then(([userData, cardsData]) => {
           setCurrentUser(userData);
-          setCards(cardsData);
+          setCards(cardsData || []);
         })
         .catch((error) => console.error(error));
     }
@@ -83,11 +83,10 @@ function App() {
           localStorage.setItem('jwt', data.token);
           api.setToken(data.token);
           
-          
           auth.getContent(data.token)
-            .then((res) => {
-              if (res && res.data) {
-                setEmail(res.data.email);
+            .then((user) => {
+              if (user && user.email) {
+                setEmail(user.email);
                 setIsLoggedIn(true);
                 setIsSuccess(true); 
                 setIsInfoTooltipOpen(true); 

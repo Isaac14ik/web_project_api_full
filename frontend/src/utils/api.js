@@ -57,20 +57,21 @@ class Api {
   removeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: this._headers, // Se añadieron los encabezados con el token
     }).then(this._checkResponse);
   }
 
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: isLiked ? "PUT" : "DELETE",
-      headers: this._headers,
+      headers: this._headers, // Se añadieron los encabezados con el token
     }).then(this._checkResponse);
   }
 }
 
+// Redirigido a tu propio servidor de desarrollo local
 const api = new Api({
-  baseUrl: "https://around-api.es.tripleten-services.com/v1",
+  baseUrl: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
   },
