@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../user');
+const User = require('../models/user');
 
 const createUser = (req, res) => {
   const { name, about, avatar, email, password } = req.body;
@@ -42,7 +42,6 @@ const login = (req, res) => {
     return res.status(400).send({ message: 'El correo y la contraseña son obligatorios' });
   }
 
-  
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {

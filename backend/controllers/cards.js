@@ -1,4 +1,4 @@
-const Card = require('../card');
+const Card = require('../models/card');
 
 const deleteCard = (req, res) => {
   const { cardId } = req.params;
