@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -14,7 +15,6 @@ const app = express();
 const { PORT = 3000 } = process.env;
 
 app.use(express.json());
-
 app.use(cors());
 app.options('*', cors());
 
@@ -33,7 +33,6 @@ app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
 
 app.use(errorLogger);
-
 app.use(errors());
 app.use(errorHandler);
 

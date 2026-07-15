@@ -56,7 +56,7 @@ const login = (req, res) => {
 
           const token = jwt.sign(
             { _id: user._id },
-            'super-strong-secret-key',
+            process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : 'super-strong-secret-key',
             { expiresIn: '7d' }
           );
 

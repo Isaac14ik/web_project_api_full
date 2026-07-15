@@ -11,7 +11,10 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, 'super-strong-secret-key');
+    payload = jwt.verify(
+      token,
+      process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : 'super-strong-secret-key'
+    );
   } catch (err) {
     return res.status(403).send({ message: 'Se requiere autorización' });
   }
