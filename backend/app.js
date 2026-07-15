@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const { errors } = require('celebrate');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middleware/auth');
@@ -14,7 +15,11 @@ const { PORT = 3000 } = process.env;
 
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/mestodb')
+
+app.use(cors());
+
+
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb')
   .then(() => console.log('Conectado con éxito a MongoDB'))
   .catch((err) => console.log('Error al conectar a MongoDB:', err));
 
