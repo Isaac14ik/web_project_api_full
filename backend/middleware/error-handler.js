@@ -1,4 +1,4 @@
-module.exports = (err, req, res, next) => {
+const centralErrorHandler = (err, req, res, next) => {
   const { statusCode = 500, message } = err;
 
   res.status(statusCode).send({
@@ -7,3 +7,5 @@ module.exports = (err, req, res, next) => {
       : message,
   });
 };
+
+module.exports = centralErrorHandler;

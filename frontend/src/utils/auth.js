@@ -1,4 +1,4 @@
-export const BASE_URL = process.env.NODE_ENV === 'production'
+export const BASE_URL = import.meta.env.MODE === 'production'
   ? 'http://34.30.121.2:3000'
   : 'http://localhost:3000';
 

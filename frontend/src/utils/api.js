@@ -73,7 +73,7 @@ const productionUrl = 'http://34.30.121.2:3000';
 const localUrl = 'http://localhost:3000';
 
 const api = new Api({
-  baseUrl: process.env.NODE_ENV === 'production' ? productionUrl : localUrl,
+  baseUrl: import.meta.env.MODE === 'production' ? productionUrl : localUrl,
   headers: {
     "Content-Type": "application/json",
   },
