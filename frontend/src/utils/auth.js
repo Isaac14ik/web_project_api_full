@@ -1,4 +1,6 @@
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = process.env.NODE_ENV === 'production'
+  ? 'http://34.30.121.2:3000'
+  : 'http://localhost:3000';
 
 const checkResponse = (res) => {
   if (res.ok) {

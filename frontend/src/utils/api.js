@@ -57,21 +57,23 @@ class Api {
   removeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers, // Se añadieron los encabezados con el token
+      headers: this._headers,
     }).then(this._checkResponse);
   }
 
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: isLiked ? "PUT" : "DELETE",
-      headers: this._headers, // Se añadieron los encabezados con el token
+      headers: this._headers,
     }).then(this._checkResponse);
   }
 }
 
-// Redirigido a tu propio servidor de desarrollo local
+const productionUrl = 'http://34.30.121.2:3000';
+const localUrl = 'http://localhost:3000';
+
 const api = new Api({
-  baseUrl: "http://localhost:3000",
+  baseUrl: process.env.NODE_ENV === 'production' ? productionUrl : localUrl,
   headers: {
     "Content-Type": "application/json",
   },
