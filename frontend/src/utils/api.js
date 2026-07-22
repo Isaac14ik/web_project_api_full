@@ -70,7 +70,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'http://34.30.121.2:3000',
+  baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:3000',
   headers: {
     "Content-Type": "application/json",
   },
