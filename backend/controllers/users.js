@@ -3,7 +3,13 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const createUser = (req, res) => {
-  const { name, about, avatar, email, password } = req.body;
+  const { 
+    name = "Jacques Cousteau", 
+    about = "Explorador", 
+    avatar = "https://amazonaws.com", 
+    email, 
+    password 
+  } = req.body;
 
   if (!password) {
     return res.status(400).send({ message: 'La contraseña es obligatoria' });
@@ -81,8 +87,54 @@ const getCurrentUser = (req, res) => {
     });
 };
 
+const updateProfile = (req, res) => {
+  const { name, about } = req.body;
+
+  User.findByIdAndUpdate(
+    req.user._id,
+    { name, about },
+    { new: true, runValidators: true }
+  )
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({ message: 'Usuario no encontrado' });
+      }
+      res.send(user);
+    })
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return res.status(400).send({ message: err.message });
+      }
+      res.status(500).send({ message: 'Error interno del servidor' });
+    });
+};
+
+const updateAvatar = (req, res) => {
+  const { avatar } = req.body;
+
+  User.findByIdAndUpdate(
+    req.user._id,
+    { avatar },
+    { new: true, runValidators: true }
+  )
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({ message: 'Usuario no encontrado' });
+      }
+      res.send(user);
+    })
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return res.status(400).send({ message: err.message });
+      }
+      res.status(500).send({ message: 'Error interno del servidor' });
+    });
+};
+
 module.exports = {
   createUser,
   login,
   getCurrentUser,
+  updateProfile,
+  updateAvatar,
 };

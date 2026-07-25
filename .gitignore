@@ -1,8 +1,23 @@
+# Secretos y Variables de Entorno
+.env
+*.env
+backend/.env
+frontend/.env
 
-backend/*.log
+# Dependencias pesadas de Node
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Archivos de registro e historiales (Requisito de la rúbrica)
+*.log
 backend/request.log
 backend/error.log
 
+# Archivos generados por compilación
+dist/
 frontend/dist/
+
+# Archivos ocultos del sistema operativo
 .DS_Store
 Thumbs.db

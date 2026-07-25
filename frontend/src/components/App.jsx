@@ -24,7 +24,6 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [popup, setPopup] = useState(null);
   const [cardToRemove, setCardToRemove] = useState(null);
-  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
@@ -82,7 +81,6 @@ function App() {
         if (data.token) {
           localStorage.setItem('jwt', data.token);
           api.setToken(data.token);
-          
           auth.getContent(data.token)
             .then((user) => {
               if (user && user.email) {
@@ -142,7 +140,7 @@ function App() {
   };
 
   const handleCardLike = (card) => {
-    const isLiked = card.isLiked;
+    const isLiked = card.likes?.some((id) => id === currentUser._id) || card.isLiked;
     api
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -189,21 +187,14 @@ function App() {
       value={{ currentUser, handleUpdateUser, handleUpdateAvatar }}
     >
       <Header isLoggedIn={isLoggedIn} userEmail={email} onSignOut={handleSignOut} />
-      
       <Switch>
         <Route path="/signup">
           <Register onRegister={handleRegister} />
         </Route>
-
         <Route path="/signin">
           <Login onLogin={handleLogin} />
         </Route>
-
-        <ProtectedRoute
-          path="/"
-          exact
-          isLoggedIn={isLoggedIn}
-        >
+        <ProtectedRoute path="/" exact isLoggedIn={isLoggedIn}>
           <div className="page">
             <div className="page__content">
               <Main
@@ -216,29 +207,24 @@ function App() {
               />
               <Footer />
             </div>
-
             {popup === 'edit' && (
               <Popup onClose={handleClosePopup}>
                 <EditProfile onClose={handleClosePopup} />
               </Popup>
             )}
-
             {popup === 'avatar' && (
               <Popup onClose={handleClosePopup}>
                 <EditAvatar onClose={handleClosePopup} />
               </Popup>
             )}
-
             {popup === 'newcard' && (
               <Popup onClose={handleClosePopup}>
                 <NewCard onAddPlace={handleAddPlaceSubmit} onClose={handleClosePopup} />
               </Popup>
             )}
-
             {selectedCard && (
               <ImagePopup card={selectedCard} onClose={handleClosePopup} />
             )}
-
             {cardToRemove && popup === 'remove' && (
               <Popup onClose={handleClosePopup}>
                 <RemoveCard
@@ -250,12 +236,10 @@ function App() {
             )}
           </div>
         </ProtectedRoute>
-
         <Route path="*">
           {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
         </Route>
       </Switch>
-
       <InfoTooltip isOpen={isInfoTooltipOpen} onClose={handleClosePopup} isSuccess={isSuccess} />
     </CurrentUserContext.Provider>
   );

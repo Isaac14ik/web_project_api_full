@@ -1,6 +1,0 @@
-
-.env
-*.log
-request.log
-error.log
-.DS_Store

@@ -19,13 +19,13 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}users/me`, {
       headers: this._headers,
     }).then(this._checkResponse);
   }
 
   setUserInfo({ name, about }) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ name, about }),
@@ -33,7 +33,7 @@ class Api {
   }
 
   setUserAvatar({ avatar }) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return fetch(`${this._baseUrl}users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ avatar }),
@@ -41,13 +41,13 @@ class Api {
   }
 
   getCardList() {
-    return fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}cards`, {
       headers: this._headers,
     }).then(this._checkResponse);
   }
 
   addCard({ name, link }) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({ name, link }),
@@ -55,14 +55,14 @@ class Api {
   }
 
   removeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+    return fetch(`${this._baseUrl}cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._checkResponse);
   }
 
   changeLikeCardStatus(cardId, isLiked) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+    return fetch(`${this._baseUrl}cards/${cardId}/likes`, {
       method: isLiked ? "PUT" : "DELETE",
       headers: this._headers,
     }).then(this._checkResponse);
@@ -70,7 +70,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: import.meta.env.VITE_API_URL,
+  baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:3000',
   headers: {
     "Content-Type": "application/json",
   },
