@@ -1,49 +1,94 @@
-# Mesto API Full - Proyecto de Despliegue e Infraestructura 🚀
+# Around The U.S. (Mesto) - Full Stack Application
 
-¡Hola! Bienvenido al repositorio final de **Mesto**. Este proyecto representa el cierre de mi formación en desarrollo web, donde integré una aplicación completa (Full-Stack) y la mudé desde mi entorno de desarrollo local hacia un servidor real en la nube de Google Cloud.
-
-El objetivo principal de este sprint no fue solo programar, sino entender cómo interactúan el código, las bases de datos y los servidores web en el mundo real bajo entornos de producción seguros.
+### Desarrollado por: **Jorge Nava** 🚀
+*Proyecto Final de Graduación - Tripleten Web Development Program*
 
 ---
 
-## 🛠️ Tecnologías y Herramientas Utilizadas
+## 📝 Descripción del Proyecto
+**Around The U.S. (Mesto)** es una aplicación web Full Stack interactiva que permite a los usuarios registrarse, iniciar sesión de forma segura y compartir fotografías de paisajes emblemáticos de los Estados Unidos. Los usuarios pueden interactuar en tiempo real agregando nuevas tarjetas de lugares, eliminando su propio contenido y dando o quitando "Me Gusta" (likes) en las publicaciones de la comunidad. 
+
+El proyecto integra un Frontend responsivo construido en React con un Backend robusto desarrollado en Node.js, comunicándose de manera nativa mediante una API REST protegida por autenticación basada en tokens JWT.
+
+---
+
+## 🌐 Enlaces de Acceso (URL de la App)
+El proyecto se encuentra totalmente desplegado en la nube y puede ser auditado de forma pública a través de las siguientes direcciones web:
+
+*   **Aplicación Web (Frontend):** [http://34.30.121.2](http://34.30.121.2)
+*   **Servidor de la API (Backend):** [http://34.30.121](http://34.30.121)
+
+---
+
+## 🛠️ Tecnologías y Técnicas Utilizadas
 
 ### Frontend
-- **React** (con **Vite** como empaquetador moderno de producción).
-- **JavaScript (ES6+)** y estilos CSS estructurados.
+*   **React.js (v18):** Arquitectura basada en componentes funcionales y Hooks avanzados (`useState`, `useEffect`, `useContext`).
+*   **React Router Dom (v5):** Manejo de enrutamiento dinámico y protección de rutas privadas mediante componentes de tipo `ProtectedRoute`.
+*   **Vite:** Herramienta de empaquetado y compilación optimizada para entornos de desarrollo y producción rápida.
+*   **CSS3:** Diseño totalmente responsivo adaptado a dispositivos móviles, tabletas y pantallas de escritorio mediante metodologías estructuradas (BEM).
 
-### Backend & Base de Datos
-- **Node.js** y **Express** para la construcción de la API REST.
-- **MongoDB** como base de datos NoSQL, utilizando **Mongoose** como ODM.
-- **Celebrate / Joi** para la validación estricta de datos en los endpoints.
-- **Winston** para el registro centralizado de logs (peticiones y errores).
+### Backend
+*   **Node.js & Express.js (v5):** Creación del servidor web, manejo de controladores de lógica de negocio y enrutamiento modular REST de peticiones HTTP (`GET`, `POST`, `PATCH`, `PUT`, `DELETE`).
+*   **MongoDB & Mongoose:** Base de datos NoSQL para el almacenamiento persistente de colecciones unificadas de Usuarios y Tarjetas mediante esquemas estrictos de validación de datos.
+*   **CORS (Cross-Origin Resource Sharing):** Configuración unificada mediante middlewares y comodines nativos (`/{*splat}`) para permitir la transferencia cruzada de datos segura entre dominios.
+*   **Autenticación y Seguridad:** Encriptación de contraseñas mediante hashing con `bcryptjs`, protección y firma de sesiones privadas con Tokens Web JSON (`JWT`) con expiración estricta de 7 días.
+*   **Celebrate & Joi:** Middleware de validación estricta de esquemas y cuerpos de solicitudes HTTP en el lado del servidor antes de tocar la base de datos (bloqueo automático de errores 400).
+*   **Winston:** Manejo centralizado e independiente de registros de actividad del servidor generados dinámicamente en archivos locales (`request.log` y `error.log`).
 
-### Infraestructura & Despliegue
-- **Google Cloud Platform (GCP)**: Instancia de máquina virtual (Compute Engine) ejecutando **Ubuntu 22.04 LTS**.
-- **Nginx**: Servidor web inverso configurado para enrutar el Frontend y mapear el Backend en un subdominio independiente.
-- **PM2**: Gestor de procesos en segundo plano para garantizar la disponibilidad continua del servidor de Node.js.
-
----
-
-## 🔒 Características Principales de Seguridad y Código
-
-1. **Autenticación Segura**: Implementación de inicio de sesión y registro de usuarios utilizando contraseñas encriptadas con `bcryptjs` y sesiones protegidas mediante tokens **JWT (JSON Web Tokens)**.
-2. **Protección de Rutas**: Middlewares personalizados instalados para bloquear el acceso a los datos de las tarjetas y perfiles a usuarios que no estén debidamente autenticados.
-3. **Manejo Centralizado de Errores**: Todo error generado en el sistema es capturado por un middleware unificado para evitar caídas inesperadas y no exponer datos técnicos sensibles al cliente.
-4. **Resiliencia con Crash-Test**: Siguiendo las pautas de evaluación, se incorporó el endpoint `/crash-test` para comprobar la capacidad de recuperación automatizada que ofrece **PM2** ante excepciones no manejadas.
-5. **Variables de Entorno**: Configuración estricta del entorno de producción (`NODE_ENV=production`) y resguardo de llaves criptográficas fuera del código fuente mediante archivos `.env`.
+### Infraestructura y Despliegue (DevOps)
+*   **Google Cloud Platform (GCP):** Despliegue completo sobre una máquina virtual remota basada en Compute Engine.
+*   **Nginx:** Configuración del servidor web de producción como proxy inverso unificado para redirigir peticiones web estándar y servir contenido estático optimizado.
+*   **PM2:** Administrador de procesos en segundo plano para garantizar la persistencia del backend, reiniciando la API automáticamente ante caídas del servidor controladas (`/crash-test`).
 
 ---
 
-## ☁️ Arquitectura del Despliegue en la Nube
+## 📸 Funcionalidades Clave y Capturas de Pantalla
 
-El despliegue fue realizado directamente en producción dentro de una arquitectura Linux. La distribución de red se organizó de la siguiente manera:
+1. **Registro e Inicio de Sesión Seguro:** Los usuarios crean cuentas y acceden validando credenciales de forma encriptada en la base de datos remota.
+2. **Edición del Perfil Dinámica:** Los usuarios pueden modificar su información pública (Nombre y Descripción de Explorador) actualizando el estado de la base de datos de manera instantánea mediante peticiones `PATCH`.
+3. **Publicación y Renderizado de Tarjetas:** Creación de nuevos elementos visuales proporcionando enlaces directos de imágenes de internet (`.jpg`, `.png`, `.webp`).
+4. **Interactividad Completa:** Sistema inteligente de Likes que almacena arreglos de IDs de usuarios en MongoDB para evitar duplicidad y botón de borrado físico exclusivo para el propietario de la tarjeta.
 
-- **Frontend (Interfaz de Usuario)**: Compilado de forma nativa en el servidor y servido de manera directa en el puerto web estándar a través de Nginx.
-- **Backend (API REST)**: Corriendo de manera interna y permanente en el puerto `3000` bajo la supervisión de PM2.
-- **Redirección**: Configuración de subdominios lógicos en Nginx para separar el tráfico visual del procesamiento de datos, asegurando la comunicación fluida entre ambas capas mediante políticas controladas de **CORS**.
+*(Se recomienda incluir capturas de pantalla de la interfaz cargada en la IP de Google Cloud dentro del repositorio definitivo).*
 
 ---
 
-## 🧑‍💻 Autor
-Proyecto desarrollado, configurado y desplegado con éxito por **Jorge Isaac** (`Isaac14ik`).
+## 🚀 Instrucciones para Ejecución Local
+
+### Clonar el repositorio:
+```bash
+git clone https://github.com
+cd WEB_PROJECT_API_FULL
+```
+
+### Configurar el Backend:
+1. Navega a la carpeta `backend` e instala dependencias:
+   ```bash
+   cd backend
+   npm install
+   ```
+2. Crea un archivo `.env` local con los siguientes valores de desarrollo:
+   ```text
+   NODE_ENV=development
+   JWT_SECRET=super-strong-secret-key
+   ```
+3. Enciende el servidor en modo desarrollo:
+   ```bash
+   npm run dev
+   ```
+
+### Configurar el Frontend:
+1. Abre una nueva terminal, navega a la carpeta `frontend` e instala dependencias:
+   ```bash
+   cd ../frontend
+   npm install
+   ```
+2. Crea un archivo `.env` local:
+   ```text
+   VITE_API_URL=http://localhost:3000
+   ```
+3. Enciende el servidor de desarrollo de React:
+   ```bash
+   npm run dev
+   ```
