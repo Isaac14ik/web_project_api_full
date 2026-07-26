@@ -15,7 +15,7 @@ El proyecto integra un Frontend responsivo construido en React con un Backend ro
 ## 🌐 Enlaces de Acceso (URL de la App)
 El proyecto se encuentra totalmente desplegado en la nube y puede ser auditado de forma pública a través de las siguientes direcciones web:
 
-*   **Aplicación Web (Frontend):** [http://34.30.121.2](http://34.30.121.2)
+*   **Aplicación Web (Frontend):** [   ](http://34.30.121.2) https://api-around.jumpingcrab.com/
 *   **Servidor de la API (Backend):** [http://34.30.121](http://34.30.121)
 
 ---
