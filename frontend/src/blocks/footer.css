@@ -2,6 +2,8 @@
   font-family: "Inter", Arial, sans-serif;
   flex-shrink: 0;
   padding: 35px 0 60px;
+  justify-content: center;
+  display:flex;
 }
 
 .footer__copyright {

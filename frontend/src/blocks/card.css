@@ -1,6 +1,7 @@
 .card {
   font-family: "Inter", Arial, sans-serif;
   border-radius: 10px;
+  width:293px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
